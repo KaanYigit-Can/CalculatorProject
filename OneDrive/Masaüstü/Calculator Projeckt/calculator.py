@@ -1,5 +1,5 @@
 print("Welcome to the Calculator!")
-print("Available operations: + - * / **")
+print("Available operations: + - * / ** √ ")
 
 def topla(sayi1, sayi2):
     return sayi1 + sayi2
@@ -18,6 +18,11 @@ def böl(sayi1, sayi2):
 def üs_al(sayi1, sayi2):
     return sayi1 ** sayi2
 
+def sqrt(sayi1):
+    if sayi1 < 0:
+        return "Cannot take the square root of a negative number"
+    return sayi1 ** 0.5
+
 def devam():
     while True:
         try:
@@ -33,14 +38,15 @@ def devam():
 
 cevap = None
 while True:
-    islem = input("Which operation would you like to perform? (+ - * / **) or C to Clear: ")
+    islem = input("Which operation would you like to perform? (+ - * / ** √) or C to Clear: ")
     if islem.upper() == "C":
         cevap = None
         print("Calculator cleared.")
         continue
-    if islem not in ["+", "-", "*", "/", "**"]:
+    if islem not in ["+", "-", "*", "/", "**", "√"]:
         print("Invalid operation")
         continue
+
     if cevap is None:
         while True:
             try:
@@ -48,15 +54,26 @@ while True:
                 break
             except ValueError:
                 print("Invalid entry. Please enter a number.")
+
     else:
         sayi1 = cevap
         print("Current result:", cevap)
+
+    if islem == "√":
+            sonuç = sqrt(sayi1)
+            print("Current result:", sonuç)
+            cevap = sonuç
+            if not devam():
+                break
+            continue
+
     while True:
         try:
             sayi2 = float(input("Please enter the second number: "))
             break
         except ValueError:
             print("Invalid entry. Please enter a number.")
+
     if islem == "+":
         sonuç = topla(sayi1, sayi2)
     elif islem == "-":
@@ -67,7 +84,11 @@ while True:
         sonuç = böl(sayi1, sayi2)
     elif islem == "**":
         sonuç = üs_al(sayi1, sayi2)
+    elif islem == "√":
+        sonuç = sqrt(sayi1)
+
+    print("Current result:", sonuç)
     cevap = sonuç
-    print("conclusion:", cevap)
+
     if not devam():
         break
